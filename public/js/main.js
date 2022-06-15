@@ -1,4 +1,4 @@
-// const deleteText = document.querySelectorAll('.fa-trash')
+const deleteText = document.querySelectorAll('.fa-trash')
 const thumbText = document.querySelectorAll('.fa-thumbs-up')
 
 Array.from(thumbText).forEach(element => {
@@ -28,4 +28,26 @@ async function addLike(){
     }
 }
 
+Array.from(deleteText).forEach(element => {
+    element.addEventListener('click', deleteMovie)
+})
 
+async function deleteMovie(){
+    const mTitle = this.parentNode.childNodes[1].innerHTML
+    const mGenre = this.parentNode.childNodes[3].innerHTML
+    try{
+        const response = await fetch('deleteMovie', {
+            method: 'delete',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify({
+                'mTitleS':mTitle,
+                'mGenreS':mGenre,
+            })
+        })
+        const data = await response.json()
+        console.log(data)
+        location.reload()
+    }catch(err){
+        console.log(err)
+    }
+}

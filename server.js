@@ -32,6 +32,7 @@ app.get('/', (req, res) => {
     db.collection('movies').find().toArray()
     .then(data => {
         res.render('moviesapi', { movies: data })
+        console.log(data)
     })
     .catch(error => console.error(error))
 })
@@ -64,3 +65,12 @@ app.put('/addOneLike', (req, res) => {
     })
     .catch(error => console.error(error))
 })
+
+app.delete('/deleteMovie', (req, res) => {
+    db.collection('movies').deleteOne({ title: req.body.mTitleS })
+    .then(result => {
+        console.log('Movie deleted')
+        res.json('Movie deleted')
+    })
+    .catch(error => console.error(error))
+    })
